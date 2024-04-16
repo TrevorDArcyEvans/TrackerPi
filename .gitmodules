@@ -1,0 +1,9 @@
+[submodule "src/NMEA-Parser"]
+	path = src/NMEA-Parser
+	url = https://github.com/TrevorDArcyEvans/NMEA-Parser.git
+[submodule "src/CircularBuffer"]
+	path = src/CircularBuffer
+	url = https://github.com/TrevorDArcyEvans/CircularBuffer.git
+[submodule "src/OBD2NET"]
+	path = src/OBD2NET
+	url = https://github.com/TrevorDArcyEvans/OBD2NET.git
