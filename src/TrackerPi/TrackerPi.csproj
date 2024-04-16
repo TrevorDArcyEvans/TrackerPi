@@ -7,4 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CircularBuffer\CircularBuffer\CircularBuffer.csproj" />
+    <ProjectReference Include="..\NMEA-Parser\src\svelde.nmea.parser\svelde.nmea.parser.csproj" />
+    <ProjectReference Include="..\OBD2NET\src\obd2NET\obd2NET.csproj" />
+  </ItemGroup>
+
 </Project>

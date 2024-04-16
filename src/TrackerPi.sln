@@ -2,6 +2,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackerPi", "TrackerPi/TrackerPi.csproj", "{650C98CC-B7BE-4F18-8241-50F7CF72E0D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircularBuffer", "CircularBuffer\CircularBuffer\CircularBuffer.csproj", "{A83FF885-AF74-4FF9-B82C-87963E1D4B9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "svelde.nmea.parser", "NMEA-Parser\src\svelde.nmea.parser\svelde.nmea.parser.csproj", "{9949C5BF-0479-497F-AB04-0E9D575C237B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "obd2NET", "OBD2NET\src\obd2NET\obd2NET.csproj", "{42FDF5E9-0526-463C-B01E-791D5150E38F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +18,17 @@ Global
 		{650C98CC-B7BE-4F18-8241-50F7CF72E0D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{650C98CC-B7BE-4F18-8241-50F7CF72E0D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{650C98CC-B7BE-4F18-8241-50F7CF72E0D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A83FF885-AF74-4FF9-B82C-87963E1D4B9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A83FF885-AF74-4FF9-B82C-87963E1D4B9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A83FF885-AF74-4FF9-B82C-87963E1D4B9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A83FF885-AF74-4FF9-B82C-87963E1D4B9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9949C5BF-0479-497F-AB04-0E9D575C237B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9949C5BF-0479-497F-AB04-0E9D575C237B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9949C5BF-0479-497F-AB04-0E9D575C237B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9949C5BF-0479-497F-AB04-0E9D575C237B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42FDF5E9-0526-463C-B01E-791D5150E38F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42FDF5E9-0526-463C-B01E-791D5150E38F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42FDF5E9-0526-463C-B01E-791D5150E38F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42FDF5E9-0526-463C-B01E-791D5150E38F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
