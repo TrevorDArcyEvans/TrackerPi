@@ -1,5 +1,5 @@
 # Reinventing the wheel but with a Raspberry Pi
-Why buy a perfectly round wheel when you can build make your own clunky one?
+Why buy a perfectly round wheel when you can build your own clunky one?
 
 ## Background
 For new car drivers, many insurance companies require installing a smart phone
@@ -53,13 +53,32 @@ together in a nice, black, plastic box? What's the worst that could happen?
 
 ### Optional
 * [ELM327 simulator](https://github.com/Ircama/ELM327-emulator)
+* [PyGPSClient](https://github.com/semuconsulting/PyGPSClient)
+
+    <details>
+
+  ```bash
+  sudo apt install python3-pip python3-tk python3-pil python3-pil.imagetk libjpeg-dev zlib1g-dev
+  python3 -m pip install --upgrade pygpsclient
+  ```
+
+    </details>
+
+* [Minicom](https://www.makeuseof.com/connect-to-serial-consoles-on-linux/)
 
 ## Getting started
 
 ```bash
+# clone repository
 git clone --recurse-submodules https://github.com/TrevorDArcyEvans/TrackerPi.git
+
+# build code
 cd TrackerPi/src
 dotnet build
+
+# run main app
+cd TrackerPi/bin/Debug/net8.0/
+./TrackerPi /dev/ttyACM0 /dev/ttyOBD0
 ```
 
 ## Acknowledgments
