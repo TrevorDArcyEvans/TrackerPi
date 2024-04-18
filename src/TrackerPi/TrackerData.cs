@@ -2,10 +2,15 @@ namespace TrackerPi;
 
 using svelde.nmea.parser;
 
-public sealed class TrackerData(GngllMessage gpsData, int speed)
+public sealed class TrackerData(GllMessage gpsData, int speed)
 {
   public string ToCsv()
   {
+    if (gpsData is null)
+    {
+      return string.Empty;
+    }
+
     var data = new[]
     {
       gpsData.TimestampUtc.ToString("u"),

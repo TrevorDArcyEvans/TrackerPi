@@ -43,9 +43,9 @@ public sealed class GpsClient : SerialClient
     Console.WriteLine($"     [{Environment.CurrentManagedThreadId}] GPS cancelled");
   }
 
-  private GngllMessage _data = new();
+  private GllMessage _data;
 
-  public GngllMessage GetCurrentData()
+  public GllMessage GetCurrentData()
   {
     return _data;
   }
@@ -61,6 +61,13 @@ public sealed class GpsClient : SerialClient
         {
           Console.WriteLine($"{e}");
           _data = (GngllMessage) e;
+        }
+      },
+      {
+        typeof(GpgllMessage), () =>
+        {
+          Console.WriteLine($"{e}");
+          _data = (GpgllMessage) e;
         }
       },
       {typeof(GngsaMessage), () => { Console.WriteLine($"{e}"); }},
