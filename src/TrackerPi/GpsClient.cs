@@ -1,12 +1,26 @@
 namespace TrackerPi;
 
+using svelde.nmea.app;
 using svelde.nmea.parser;
 
-public sealed class GpsClient(string port) :
-  SerialClient(port)
+public sealed class GpsClient : SerialClient
 {
+  private readonly SerialReader _serial;
+  private readonly NmeaParser _parser = new();
+
+  public GpsClient(string port) :
+    base(port)
+  {
+    _serial = new SerialReader(port);
+    _serial.NmeaSentenceReceived += NmeaSentenceReceived;
+
+    _parser.NmeaMessageParsed += NmeaMessageParsed;
+  }
+
   public void Run(CancellationToken token)
   {
+    _serial.Open();
+
     while (true)
     {
       if (token.IsCancellationRequested)
@@ -14,7 +28,8 @@ public sealed class GpsClient(string port) :
         Console.WriteLine($"    [{Environment.CurrentManagedThreadId}] GPS cancellation requested");
 
         // Perform cleanup if necessary.
-        //...
+        _serial.Close();
+        _serial.Dispose();
         // Terminate the operation.
 
         break;
@@ -28,11 +43,43 @@ public sealed class GpsClient(string port) :
     Console.WriteLine($"     [{Environment.CurrentManagedThreadId}] GPS cancelled");
   }
 
+  private GngllMessage _data = new();
+
   public GngllMessage GetCurrentData()
   {
-    var gpsData = new GngllMessage();
-    gpsData.Parse("$GNGLL,4513.13795,N,01859.19702,E,143717.00,A,A*72");
+    return _data;
+  }
 
-    return gpsData;
+  private void NmeaMessageParsed(object sender, NmeaMessage e)
+  {
+    var msgActions = new Dictionary<Type, Action>
+    {
+      {typeof(GnggaMessage), () => { Console.WriteLine($"{e}"); }},
+      {typeof(GpggaMessage), () => { Console.WriteLine($"{e}"); }},
+      {
+        typeof(GngllMessage), () =>
+        {
+          Console.WriteLine($"{e}");
+          _data = (GngllMessage) e;
+        }
+      },
+      {typeof(GngsaMessage), () => { Console.WriteLine($"{e}"); }},
+      {typeof(GpgsaMessage), () => { Console.WriteLine($"{e}"); }},
+      {typeof(GnrmcMessage), () => { Console.WriteLine($"{e}"); }},
+      {typeof(GprmcMessage), () => { Console.WriteLine($"{e}"); }},
+      {typeof(GntxtMessage), () => { Console.WriteLine($"{e}"); }},
+      {typeof(GnvtgMessage), () => { Console.WriteLine($"{e}"); }},
+      {typeof(GpvtgMessage), () => { Console.WriteLine($"{e}"); }},
+      {typeof(GpgsvMessage), () => { Console.WriteLine($"{e}(GPS)"); }},
+      {typeof(GlgsvMessage), () => { Console.WriteLine($"{e}(Glosnass)"); }},
+      {typeof(GbgsvMessage), () => { Console.WriteLine($"{e}(Baidoo)"); }},
+    };
+
+    msgActions[e.GetType()]();
+  }
+
+  private void NmeaSentenceReceived(object sender, NmeaSentence e)
+  {
+    _parser.Parse(e.Sentence);
   }
 }

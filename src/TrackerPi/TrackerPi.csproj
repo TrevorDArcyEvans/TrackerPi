@@ -17,4 +17,13 @@
     <ProjectReference Include="..\OBD2NET\src\obd2NET\obd2NET.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\NMEA-Parser\src\svelde.nmea.app\NmeaSentence.cs">
+      <Link>NmeaSentence.cs</Link>
+    </Compile>
+    <Compile Include="..\NMEA-Parser\src\svelde.nmea.app\SerialNmeaReader.cs">
+      <Link>SerialNmeaReader.cs</Link>
+    </Compile>
+  </ItemGroup>
+
 </Project>
