@@ -2,8 +2,10 @@
 
 using CommandLine;
 
-public class Program
+public sealed class Program : IDisposable
 {
+  private readonly CancellationTokenSource _cts = new();
+
   public static async Task Main(string[] args)
   {
     var prgm = new Program();
@@ -15,7 +17,34 @@ public class Program
 
   private async Task Run(Options opt)
   {
-    Console.WriteLine($"GPS port: {opt.GPSPort}");
+    Console.WriteLine($"GPS port: {opt.GpsPort}");
+    Console.WriteLine($"OBD port: {opt.ObdPort}");
+
+    // install ctrl-c handler to shutdown workers
+    Console.CancelKeyPress += ConsoleOnCancelKeyPress;
+
+    // create workers
+    var gps = new GpsClient(opt.GpsPort);
+    var obd = new ObdClient(opt.ObdPort);
+    var log = new DataLogger(gps, obd);
+
+    // start workers
+    var gpsTask = Task.Factory.StartNew(() => gps.Run(_cts.Token));
+    var obdTask = Task.Factory.StartNew(() => obd.Run(_cts.Token));
+    var logTask = Task.Factory.StartNew(() => log.Run(_cts.Token));
+
+    // blocks until workers are finished
+    Task.WaitAll(gpsTask, obdTask, logTask);
+
+    Console.WriteLine("Finished");
+  }
+
+  private void ConsoleOnCancelKeyPress(object? sender, ConsoleCancelEventArgs e)
+  {
+    e.Cancel = true;
+    _cts.Cancel();
+
+    Console.WriteLine("Console cancelled");
   }
 
   private Task HandleParseError(IEnumerable<Error> errs)
@@ -34,5 +63,12 @@ public class Program
 
     Console.WriteLine("Parser Fail");
     return Task.CompletedTask;
+  }
+
+  public void Dispose()
+  {
+    _cts.Dispose();
+
+    Console.WriteLine("Disposed");
   }
 }
