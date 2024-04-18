@@ -1,5 +1,7 @@
 namespace TrackerPi;
 
+using svelde.nmea.parser;
+
 public sealed class GpsClient(string port) :
   SerialClient(port)
 {
@@ -24,5 +26,13 @@ public sealed class GpsClient(string port) :
     }
 
     Console.WriteLine($"     [{Environment.CurrentManagedThreadId}] GPS cancelled");
+  }
+
+  public GngllMessage GetCurrentData()
+  {
+    var gpsData = new GngllMessage();
+    gpsData.Parse("$GNGLL,4513.13795,N,01859.19702,E,143717.00,A,A*72");
+
+    return gpsData;
   }
 }

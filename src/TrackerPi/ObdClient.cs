@@ -25,4 +25,9 @@ public sealed class ObdClient(string port) :
 
     Console.WriteLine($"     [{Environment.CurrentManagedThreadId}] OBD cancelled");
   }
+
+  public int GetCurrentData()
+  {
+    return Random.Shared.Next();
+  }
 }

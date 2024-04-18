@@ -2,9 +2,6 @@ namespace TrackerPi;
 
 public sealed class DataLogger(GpsClient gps, ObdClient obd)
 {
-  private readonly GpsClient _gps = gps;
-  private readonly ObdClient _obd = obd;
-
   public void Run(CancellationToken token)
   {
     while (true)
@@ -22,9 +19,18 @@ public sealed class DataLogger(GpsClient gps, ObdClient obd)
 
       // Simulate some work.
       Thread.Sleep(1000);
-      Console.WriteLine($"  [{Environment.CurrentManagedThreadId}] Log...");
+      var logData = GetCurrentData();
+      Console.WriteLine($"  [{Environment.CurrentManagedThreadId}] Log {logData.ToCsv()}");
     }
 
     Console.WriteLine($"     [{Environment.CurrentManagedThreadId}] Log cancelled");
+  }
+
+  public TrackerData GetCurrentData()
+  {
+    var gpsData = gps.GetCurrentData();
+    var obdData = obd.GetCurrentData();
+
+    return new TrackerData(gpsData, obdData);
   }
 }
