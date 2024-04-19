@@ -19,7 +19,7 @@ public sealed class ObdClient(string port) :
       }
 
       // Simulate some work.
-      Thread.Sleep(1000);
+      Thread.Sleep(TimeSpan.FromSeconds(1));
       Console.WriteLine($"  [{Environment.CurrentManagedThreadId}] OBD work...");
     }
 

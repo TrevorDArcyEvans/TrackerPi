@@ -36,7 +36,7 @@ public sealed class GpsClient : SerialClient
       }
 
       // Simulate some work.
-      Thread.Sleep(1000);
+      Thread.Sleep(TimeSpan.FromSeconds(1));
       Console.WriteLine($"  [{Environment.CurrentManagedThreadId}] GPS...");
     }
 
